@@ -5,7 +5,7 @@ MapCode is based on UTF-8, and so it uses **codepoints**.
 
 Codepoints
 ----------
-A MapCode codepoint looks just like an UTF-8 codepoint, with only a minor difference: codepoints can be up to 9 bytes long.
+A MapCode codepoint looks just like an UTF-8 codepoint, with only a minor difference: codepoints can be up to 8 bytes long.
 
 Header
 ------
