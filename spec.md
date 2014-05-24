@@ -18,7 +18,7 @@ Dimensions work just like real life dimensions.
 
 A 0-dimensional map is a dot, a point. It's when all dimensions have length 0. It can hold a single node.  
 A 1-dimensional map is a line. It's when all dimensions but one have length 0. It can hold X+1 nodes.  
-A 2-dimensional map is a rectangle. It's when only one dimension has length 0. It can hold (X+1)*(Y+1) or X*Y + X + Y + 1 nodes.  
-A 3-dimensional map is a cuboid. It's when all dimensions have a non-0 length. It can hold (X+1)*(Y+1)*(Z+1) or X*Y*Z + X*Y + Y*Z + X*Z + X + Y + Z + 1 nodes.
+A 2-dimensional map is a rectangle. It's when only one dimension has length 0. It can hold (X+1)\*(Y+1) or X\*Y + X + Y + 1 nodes.  
+A 3-dimensional map is a cuboid. It's when all dimensions have a non-0 length. It can hold (X+1)\*(Y+1)\*(Z+1) or X\*Y\*Z + X\*Y + Y\*Z + X\*Z + X + Y + Z + 1 nodes.
 
 (TODO: stuff)
