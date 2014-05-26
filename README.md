@@ -1,4 +1,4 @@
-MapCode-Libs
-============
+MapCode
+=======
 
-Libs for MapCode.
+Specification and libraries for MapCode.
