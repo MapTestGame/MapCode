@@ -28,9 +28,9 @@ A string is a length (in number of characters/codepoints, not bytes), followed b
 
 Example:
 
-| Length |  S  |  o  |  n  |  i  |  E  |  x  |  2  |
-| :----: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
-|   07   |  53 |  6F |  6E |  69 |  45 |  78 |  32 |
+| Length |   S   |   o   |   n   |   i   |   E   |   x   |   2   |
+| :----: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|  0x07  |  0x53 |  0x6F |  0x6E |  0x69 |  0x45 |  0x78 |  0x32 |
 
 Static list
 -----------
