@@ -1,10 +1,11 @@
 MapCode Version 1.0 Specification
 =================================
-
-MapCode is based on UTF-8, and so it uses **codepoints**. All numbers are encoded as codepoints, including (but not limited to): version numbers (major, minor), string lengths, dimension sizes.
+This document describes MapCode 1.0.
 
 Codepoints
 ==========
+MapCode is based on UTF-8, and so it uses **codepoints**. All numbers are encoded as codepoints, including (but not limited to): version numbers (major, minor), string lengths, dimension sizes.
+
 A MapCode codepoint looks just like an UTF-8 codepoint, with only a minor difference: codepoints can be up to 8 bytes long. This means codepoints can store up to 42 bits of data.
 
 Basic types
@@ -68,7 +69,7 @@ Static dictionary
 -----------------
 A static dictionary comprises a length (in number of entries), followed by a type number (as defined above), followed by <length> entries.
 
-A static dictionary entry comprises a string, followed by a <type>.
+A static dictionary entry comprises a string (the key), followed by a <type>.
 
 Example of empty static dictionary:
 
@@ -92,7 +93,7 @@ Dynamic dictionary
 ------------------
 A dynamic dictionary comprises a length (in number of entries), followed by a type number (as defined above), followed by <length> entries.
 
-A dynamic dictionary entry comprises a string, followed by a <type>.
+A dynamic dictionary entry comprises a string (the key), followed by a <type>.
 
 Example of empty dynamic dictionary:
 
