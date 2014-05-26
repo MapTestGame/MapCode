@@ -136,7 +136,7 @@ The extension list is a static list of strings, where an even index contains an 
 
 Extension metadata
 ------------------
-Extension metadata is stored as a static list of dynamic maps. The maps MUST have a "name" and a "version" key.
+Extension metadata is stored as a static list of dynamic dictionaries. The dictionaries MUST have a "name" and a "version" key.
 
 The map
 -------
