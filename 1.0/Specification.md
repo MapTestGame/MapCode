@@ -2,6 +2,8 @@ MapCode Version 1.0 Specification
 =================================
 This document describes MapCode 1.0.
 
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC 2119](http://tools.ietf.org/html/rfc2119).
+
 Codepoints
 ==========
 MapCode is based on UTF-8, and so it uses **codepoints**. All numbers are encoded as codepoints, including (but not limited to): version numbers (major, minor), string lengths, dimension sizes.
@@ -25,7 +27,7 @@ Lists are 0-indexed.
 
 String
 ------
-A string is a length (in number of characters/codepoints, not bytes), followed by the string data. All strings must be UTF-8 encoded. Strings may contain embed NULs.
+A string is a length (in number of characters/codepoints, not bytes), followed by the string data. All strings MUST be UTF-8 encoded. Strings may contain embed NULs.
 
 Example:
 
@@ -35,7 +37,7 @@ Example:
 
 Static list
 -----------
-A static list comprises a length (in number of entries), followed by a type number (as defined above), followed by <length> entries. Decoders must ignore type number when decoding empty lists. Encoders should save proper type number on empty lists.
+A static list comprises a length (in number of entries), followed by a type number (as defined above), followed by <length> entries. Decoders SHOULD ignore type number when decoding empty lists. Encoders SHOULD save proper type number on empty lists.
 
 Example of empty static list:
 
@@ -71,7 +73,7 @@ A static dictionary comprises a length (in number of entries), followed by a typ
 
 A static dictionary entry comprises a string (the key), followed by a <type>.
 
-**Dictionaries must not have duplicate keys!**
+**Dictionaries MUST NOT have duplicate keys!**
 
 Example of empty static dictionary:
 
@@ -97,7 +99,7 @@ A dynamic dictionary comprises a length (in number of entries), followed by a ty
 
 A dynamic dictionary entry comprises a string (the key), followed by a <type>.
 
-**Dictionaries must not have duplicate keys!**
+**Dictionaries MUST NOT have duplicate keys!**
 
 Example of empty dynamic dictionary:
 
@@ -134,7 +136,7 @@ The extension list is a static list of strings, where an even index contains an 
 
 Extension metadata
 ------------------
-Extension metadata is stored as a static list of dynamic maps. The maps **must** have a "name" and a "version" key.
+Extension metadata is stored as a static list of dynamic maps. The maps MUST have a "name" and a "version" key.
 
 The map
 -------
