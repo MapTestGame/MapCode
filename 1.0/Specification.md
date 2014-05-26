@@ -113,7 +113,7 @@ Example of dynamic dictionary:
 
 MapCode Files
 =============
-A MapCode file is a header, followed by extension metadata (if any), followed by the map itself.
+A MapCode file is a header, followed by extension metadata, followed by the map itself.
 
 Header
 ------
@@ -134,7 +134,7 @@ The extension list is a static list of strings, where an even index contains an 
 
 Extension metadata
 ------------------
-TODO
+Extension metadata is stored as a static list of dynamic maps. The maps **must** have a "name" and a "version" key.
 
 The map
 -------
