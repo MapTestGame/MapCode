@@ -1,7 +1,7 @@
 MapCode Version 1.0 Specification
 =================================
 
-MapCode is based on UTF-8, and so it uses **codepoints**. All numbers are encoded as codepoints, including (but not limited to): version numbers (major, minor, patch), string lengths, dimension sizes.
+MapCode is based on UTF-8, and so it uses **codepoints**. All numbers are encoded as codepoints, including (but not limited to): version numbers (major, minor), string lengths, dimension sizes.
 
 Codepoints
 ==========
@@ -112,7 +112,7 @@ A MapCode file is a header, followed by extension metadata (if any), followed by
 
 Header
 ------
-The header comprises a major version, a minor version, a patch version, dimension information, and an extension list.
+The header comprises a major version, a minor version, dimension information, and an extension list.
 
 ### Dimensions
 The dimension header comprises 3 codepoints, indicating the length of the X dimension, the length of the Y dimension, and the length of the Z dimension, respectively. Dimensions can have a length of zero.
