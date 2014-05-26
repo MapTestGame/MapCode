@@ -9,7 +9,7 @@ A MapCode codepoint looks just like an UTF-8 codepoint, with only a minor differ
 
 Basic types
 ===========
-There are 4 basic types.
+There are 6 basic types.
 
 | Type Name          | Type Code |
 | ------------------ | :-------: |
