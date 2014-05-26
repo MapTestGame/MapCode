@@ -71,6 +71,8 @@ A static dictionary comprises a length (in number of entries), followed by a typ
 
 A static dictionary entry comprises a string (the key), followed by a <type>.
 
+**Dictionaries must not have duplicate keys!**
+
 Example of empty static dictionary:
 
 | Length | Type number |
@@ -94,6 +96,8 @@ Dynamic dictionary
 A dynamic dictionary comprises a length (in number of entries), followed by a type number (as defined above), followed by <length> entries.
 
 A dynamic dictionary entry comprises a string (the key), followed by a <type>.
+
+**Dictionaries must not have duplicate keys!**
 
 Example of empty dynamic dictionary:
 
