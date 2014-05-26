@@ -21,6 +21,6 @@ Extension Metadata Root
 |   |-- "version" => "1.0"
 |   |-- "ids"
 |   |   |-- "default:dirt" => 1
-|   |   |   "default:stone" => 2
+|   |   |-- "default:stone" => 2
 ...
 ```
