@@ -113,6 +113,10 @@ Example of dynamic dictionary:
 | :----: | :---------: | :--------: | :------: | :----: | :---------: | :--------: | :------: | :----: |
 |    1   |      0      |     6      |  Conway  | 196883 |      0      |     7      | SoniEx2  |   16   |
 
+Invalid data
+============
+Attempts to load invalid data MUST result in an error. The data on disk MUST remain unchanged.
+
 MapCode Files
 =============
 A MapCode file is a header, followed by extension metadata, followed by the map itself.
