@@ -140,4 +140,4 @@ Extension metadata is stored as a static list of dynamic dictionaries. The dicti
 
 The map
 -------
-The map can contain nodes (0x00 - 0xFFFFF) or instructions (TODO).
+The map can contain nodes (0x0000 - 0xFFFF) or instructions (>=0x100000).
