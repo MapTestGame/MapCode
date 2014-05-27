@@ -25,6 +25,9 @@ There are 6 basic types.
 
 Lists are 0-indexed.
 
+### Number
+A number is simply a plain old codepoint.
+
 ### String
 A string is a length (in number of characters/codepoints, not bytes), followed by the string data. All strings MUST be UTF-8 encoded. Strings may contain embed NULs.
 
