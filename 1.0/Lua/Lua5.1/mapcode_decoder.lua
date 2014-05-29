@@ -22,12 +22,26 @@
     SOFTWARE.
 --]]
 
+-- local copies to make things faster
+local type, setmetatable, tinsert, tconcat, strfmt, strchar, next = type, setmetatable, table.insert, table.concat, string.format, string.char, next;
+
+-- "Cheap" metatable trick
+local types = setmetatable({},{__index = function(t,k) return type(k) end, __mode = 'k'})
+
+local function setType(t, name)
+    types[t] = name
+end
+
+local function getType(t)
+    return types[t]
+end
+
 local M;
 
 local _shift6 = 2^6
 
 local function _E(s,...)
-    return nil, string.format(s,...)
+    return nil, strfmt(s,...)
 end
 
 local decoders = {}
@@ -78,7 +92,7 @@ local function _decodeUtf8(file, t, count)
         if n < 0x80 or n > 0xBF then
             return _E("Incomplete UTF-8 sequence at position 0x%X", file:seek("cur",0) - 1)
         else
-            table.insert(t, n)
+            tinsert(t, strchar(n))
             return _decodeUtf8(file, t, count - 1)
         end
     else
@@ -93,7 +107,7 @@ local function decodeUtf8(file, t)
     end
     local c = 0
     if n < 0x80 then -- 7-bit
-        table.insert(t, n)
+        tinsert(t, strchar(n))
         return true
     elseif n < 0xC0 then -- continuation chars (0x80 - 0xBF aka 0b10xx_xxxx)
         return _E("Invalid UTF-8 byte 0x%.02X at position 0x%X", n, file:seek("cur",0) - 1)
@@ -107,7 +121,7 @@ local function decodeUtf8(file, t)
     else
         return _E("Invalid UTF-8 byte 0x%.02X at position 0x%X", n, file:seek("cur",0) - 1)
     end
-    table.insert(t, n)
+    tinsert(t, strchar(n))
     return _decodeUtf8(file, t, c)
 end
 
@@ -119,7 +133,7 @@ local function decodeString(file)
         local ok, err = decodeUtf8(file, _temp)
         if not ok then return nil, err end
     end
-    return table.concat(_temp, '')
+    return tconcat(_temp, '')
 end
 decoders[1] = decodeString
 
@@ -141,6 +155,7 @@ local function decodeStaticList(file)
             list[_i] = _data
         end
         setmetatable(list, {__unm=function() return t end})
+        setType(list, "static list")
         return list
     else
         return nil, _E("Unknown type %d at position 0x%x", t, file:seek("cur",0) - 1)
@@ -167,6 +182,7 @@ local function decodeDynamicList(file)
         if not _data then return nil, _err end
         list[_i] = _data
     end
+    setType(list, "dynamic list")
     return list
 end
 decoders[3] = decodeDynamicList
@@ -192,6 +208,7 @@ local function decodeStaticDictionary(file)
             list[_name] = _data
         end
         setmetatable(list, {__unm=function() return t end})
+        setType(list, "static dictionary")
         return list
     else
         return nil, _E("Unknown type %d at position 0x%x", t, file:seek("cur",0) - 1)
@@ -221,6 +238,7 @@ local function decodeDynamicDictionary(file)
         if not _data then return nil, _err end
         list[_name] = _data
     end
+    setType(list, "dynamic dictionary")
     return list
 end
 decoders[5] = decodeDynamicDictionary
@@ -236,7 +254,7 @@ local function decodeHeader(file)
     if VERSION ~= 1 and version ~= 0 then
         return _E("Incompatible version %d.%d", VERSION, version)
     end
-    header = {version = ("%d.%d"):format(VERSION, version)}
+    header = {version = strfmt("%d.%d",VERSION, version)}
     -- Decode sizes
     -- Use locals because Rio Lua isn't very good at optimizing things
     sizex, err = decodeNumber(file)
@@ -274,7 +292,7 @@ local function decodeTheWholeThing(file)
         local n, err = decodeNumber(file)
         if not n and err == "End of file" then break
         elseif not n then return nil, err end
-        table.insert(rawData, n)
+        tinsert(rawData, n)
     end
     return {header = header, extensionMetadata = extensionMetadata, rawData = rawData}
 end
@@ -288,6 +306,7 @@ M = {
     decodeDynamicDictionary = decodeDynamicDictionary;
     decodeHeader = decodeHeader;
     decodeTheWholeThing = decodeTheWholeThing;
+    type = getType;
 }
 
 return M
