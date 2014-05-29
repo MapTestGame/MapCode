@@ -286,7 +286,7 @@ local function decodeTheWholeThing(file)
     -- the negation operator works on static lists and dictionaries to
     -- get the type of the values.
     -- we use next because #table doesn't work with index 0 and hash.
-    if next(extensionMetadata) and -extensionMetadata ~= 1 then return _E("Invalid extension metadata list with value type %d", -extensionMetadata) end
+    if next(extensionMetadata) and -extensionMetadata ~= 5 then return _E("Invalid extension metadata list with value type %d", -extensionMetadata) end
     rawData = {}
     while true do
         local n, err = decodeNumber(file)
