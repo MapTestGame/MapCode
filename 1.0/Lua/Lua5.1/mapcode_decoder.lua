@@ -72,49 +72,52 @@ local function decodeNumber(file)
 end
 decoders[0] = decodeNumber
 
-local function _decodeUtf8(file, count, ...)
+local function _decodeUtf8(file, t, count)
     if count > 0 then
         local n = file:read("*n")
         if n < 0x80 or n > 0xBF then
             return _E("Incomplete UTF-8 sequence at position 0x%X", file:seek("cur",0) - 1)
         else
-            return _decodeUtf8(file, count - 1, string.char(n), ...)
+            table.insert(t, n)
+            return _decodeUtf8(file, t, count - 1)
         end
     else
-        return {...}
+        return true
     end
 end
-local function decodeUtf8(file)
+-- this is more of a "validateUtf8" than a "decodeUtf8"
+local function decodeUtf8(file, t)
     local n = file:read("*n")
     if not n then -- EOF
         return _E("End of file")
     end
+    local c = 0
     if n < 0x80 then -- 7-bit
-        return {n}
+        table.insert(t, n)
+        return true
     elseif n < 0xC0 then -- continuation chars (0x80 - 0xBF aka 0b10xx_xxxx)
         return _E("Invalid UTF-8 byte 0x%.02X at position 0x%X", n, file:seek("cur",0) - 1)
     elseif n < 0xE0 then -- 2 byte sequences, 6+5=11 bits
-        return _decodeNumber(file, 1)
+        c = 1
     elseif n < 0xF0 then -- 3 byte sequences, 6+6+4 = 16 bits
-        return _decodeNumber(file, 2)
+        c = 2
     elseif n < 0xF8 then -- 4 byte sequences, 6+6+6+3 = 21 bits
         -- TODO validate the thing
-        return _decodeNumber(file, 3)
+        c = 3
     else
         return _E("Invalid UTF-8 byte 0x%.02X at position 0x%X", n, file:seek("cur",0) - 1)
     end
+    table.insert(t, n)
+    return _decodeUtf8(file, t, c)
 end
 
 local function decodeString(file)
     local l = decodeNumber(file)
-    local _temp = {} -- faster than doing multiple concatenations
+    local _temp = {} -- (usually) faster than doing multiple concatenations
     local _i = 0
     while _i < l do
-        local _utf8, _err = decodeUtf8(file)
-        if not utf8 then return nil, _err end
-        for pos = #_utf8, 1, -1 do
-            table.insert(_temp, _utf8[pos])
-        end
+        local ok, err = decodeUtf8(file, _temp)
+        if not ok then return nil, err end
     end
     return table.concat(_temp, '')
 end
