@@ -32,31 +32,27 @@ end
 
 local M = {}
 
-M.instructions = {}
-M.nodetypes = {}
-M.itemtypes = {}
-
 local function parseTheWholeThing(file)
-    local t, err = decoder.decodeTheWholeThing(file)
+    local t, err = decoder.decodeTheWholeThing(file, nodetypes, itemtypes, instructions)
     if not t then return nil, err end
     local state = {}
-    state.world = {}
+    local world = {}
     state.np = 1
     state.modulus = t.header.modulus
     state.i = 1
     while state.i <= #t.rawData do
         local v = t.rawData[state.i]
         if v < 0x10000 then
-            if not M.nodetypes[v] then
+            if not nodetypes[v] then
                 return _E("Unknown nodetype %d", v)
             end
-            state.world[np] = v
+            world[np] = v
             state.np = (state.np + 1) % state.modulus
         elseif v < 0x200000 then
             return _E("Attempt to use itemtype as node")
         else
-            if M.instructions[v] then
-                M.instructions[v](t, state)
+            if instructions[v] then
+                instructions[v](t, world, state, nodetypes, itemtypes, instructions)
             else
                 return _E("Unknown instruction %d", v)
             end
