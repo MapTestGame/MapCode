@@ -32,7 +32,7 @@ end
 
 local M = {}
 
-local function parseTheWholeThing(file)
+local function parseTheWholeThing(file, nodetypes, itemtypes, instructions)
     local t, err = decoder.decodeTheWholeThing(file, nodetypes, itemtypes, instructions)
     if not t then return nil, err end
     local state = {}
