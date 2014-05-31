@@ -24,7 +24,7 @@
 
 local decoder = require('mapcode_decoder')
 
-local ipairs, strfmt = ipairs, string.format;
+local strfmt = string.format;
 
 local function _E(s,...)
     return nil, strfmt(s,...)
